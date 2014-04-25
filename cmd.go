@@ -8,7 +8,6 @@ import (
 )
 
 var path *string
-var query string
 
 func init() {
     parseCommandLine()
@@ -42,13 +41,14 @@ func printTables() {
 func parseCommandLine() {
     path = flag.String("p", ".", "The (optional) path to run gitql")
     version := flag.Bool("v", false, "The version of gitql")
+    interactive = flag.Bool("i", false, "Enter to interactive mode")
     showTables := flag.Bool("show-tables", false, "Show all tables")
     flag.Usage = usage
     flag.Parse()
 
     if *version {
         // @todo refactor to dynamic value
-        fmt.Println("Gitql 1.0.0")
+        fmt.Println("Gitql 1.0.1")
         os.Exit(0)
     }
 
@@ -59,7 +59,7 @@ func parseCommandLine() {
     }
 
     query = flag.Arg(0)
-    if flag.NArg() != 1 {
+    if !*interactive && flag.NArg() != 1 {
         flag.Usage()
         os.Exit(1)
     }

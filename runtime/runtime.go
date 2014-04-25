@@ -228,6 +228,7 @@ func printTable(rows []tableRow, fields []string) {
 	for _, r := range rows {
 		table.AddRow(r)
 	}
+	fmt.Println()
 	table.Print()
 }
 
@@ -322,8 +323,9 @@ func metadataReference(identifier string, object *git.Reference) string {
 		if object.IsTag() {
 			return REFERENCE_TYPE_TAG
 		}
+		log.Fatalf("Unexcpeted object %s\n", object.Name())
 	}
-	log.Fatalf("Field %s not implemented yet\n", identifier)
+	log.Fatalf("Field '%s' not implemented yet\n", identifier)
 
 	return ""
 }
